@@ -67,7 +67,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         setLoading(false)
       })
-      .catch((err) => console.log(err.message))
+      .catch((err) => {
+        alert(err.message)
+        // return <div>{err.message}</div>
+      })
       .finally(() => {
         setLoading(false)
       })
@@ -83,7 +86,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         setLoading(false)
       })
-      .catch((err) => console.log(err.message))
+      .catch((err) => {
+        alert(err.message)
+        // return (
+        //   <div>
+        //     <p>Please enter a valid email and password!</p>
+        //   </div>
+        // )
+      })
       .finally(() => {
         setLoading(false)
       })

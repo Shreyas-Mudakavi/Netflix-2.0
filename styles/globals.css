@@ -33,3 +33,25 @@
     border-2 border-[gray] bg-[#2a2a2a]/60 transition hover:border-white hover:bg-white/10;
   }
 }
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 20rem;
+  width: 5rem;
+  height: 5rem;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 5px solid transparent;
+  border-top-color: red;
+  border-bottom-color: red;
+  animation: spinner 0.8s ease infinite;
+}
