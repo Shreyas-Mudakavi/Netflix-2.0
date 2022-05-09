@@ -28,7 +28,7 @@ const Login = () => {
       setIsLoading(true)
       await signIn(email, password)
 
-      setIsLoading(false)
+      // setIsLoading(false)
     } else {
       await signUp(email, password)
     }
@@ -48,21 +48,24 @@ const Login = () => {
     <div className="relative flex h-screen w-screen flex-col bg-black md:items-center md:justify-center md:bg-transparent">
       <Head>
         <title>Netflix</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico"
+        />
       </Head>
       <Image
         src="https://rb.gy/p2hphi"
         layout="fill"
-        className="-z-10 !hidden opacity-60 sm:!inline"
+        className="-z-10 !hidden opacity-40 sm:!inline"
         objectFit="cover"
       />
 
       {/* netflix logo */}
       <img
         src="https://www.logo.wine/a/logo/Netflix/Netflix-Logo.wine.svg" // add the host name (www.logo.wine) in config file if using <Image>
-        className="object-containl absolute left-2 top-2 cursor-pointer md:left-6 md:top-6"
-        width={150}
-        height={150}
+        className="absolute left-2 top-2 cursor-pointer object-contain shadow-md md:left-6 md:top-0"
+        width={200}
+        height={200}
         alt="logo"
       />
 
@@ -77,12 +80,14 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="Email"
-                className="input"
+                className={`input ${
+                  errors.email && 'border-b-2 border-orange-500'
+                }`}
                 {...register('email', { required: true })}
               />
               {errors.email && (
-                <p className="p-1 text-[13px] font-light text-orange-500">
-                  Please enter a valid email!
+                <p className="p-1 text-[14px] font-light text-orange-500">
+                  Please enter a valid email.
                 </p>
               )}
             </label>
@@ -90,12 +95,14 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="Password"
-                className="input"
+                className={`input ${
+                  errors.email && 'border-b-2 border-orange-500'
+                }`}
                 {...register('password', { required: true })}
               />
               {errors.password && (
-                <p className="p-1 text-[13px] font-light text-orange-500">
-                  Password should be 4 to 16 characters long.
+                <p className="p-1 text-[14px] font-light text-orange-500">
+                  Your password must contain between 4 and 60 characters.
                 </p>
               )}
             </label>

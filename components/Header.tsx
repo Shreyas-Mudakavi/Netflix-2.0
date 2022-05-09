@@ -27,8 +27,8 @@ const Header = () => {
       <div className="flex items-center space-x-2 md:space-x-10">
         <img
           src="https://www.logo.wine/a/logo/Netflix/Netflix-Logo.wine.svg"
-          width={100}
-          height={100}
+          width={150}
+          height={150}
           className="cursor-pointer object-contain"
           alt="logo"
         />
@@ -43,15 +43,15 @@ const Header = () => {
       <div className="flex items-center space-x-4 text-sm font-light">
         <SearchIcon className="hidden h-6 w-6 sm:inline " />
         <p className="hidden lg:inline">Kids</p>
-        <BellIcon className="h-6 w-6 " />
-        {/* <Link href="/account"> */}
-        <img
-          onClick={logOut}
-          src="https://rb.gy/g1pwyx"
-          alt=""
-          className="cursor-pointer rounded"
-        />
-        {/* </Link> */}
+        <BellIcon className="h-6 w-6 " onClick={logOut} />
+        <Link href="/account">
+          <img
+            // onClick={logOut}
+            src="https://rb.gy/g1pwyx"
+            alt=""
+            className="cursor-pointer rounded"
+          />
+        </Link>
       </div>
     </header>
   )

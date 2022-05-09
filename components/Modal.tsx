@@ -7,7 +7,7 @@ import {
 import { PlusIcon } from '@heroicons/react/solid'
 import MuiModal from '@mui/material/Modal'
 import { useEffect, useState } from 'react'
-import { FaPause, FaPlay, FaThumbsUp } from 'react-icons/fa'
+import { FaPause, FaPlay } from 'react-icons/fa'
 import ReactPlayer from 'react-player/lazy'
 import { useRecoilState } from 'recoil'
 import { modalState, movieState } from '../atoms/modalAtom'
@@ -137,7 +137,7 @@ const Modal = () => {
             </div>
 
             <div className="flex flex-col gap-x-10 gap-y-4 font-light md:flex-row">
-              <p className="w-5/6">{movie?.overview}</p>
+              <p className="w-4/6">{movie?.overview}</p>
               <div className="flex flex-col space-y-3 text-sm">
                 <div>
                   <span className="text-[gray]">Genres: </span>

@@ -1,15 +1,20 @@
-import type { NextPage } from 'next'
+import { getProducts, Product } from '@stripe/firestore-stripe-payments'
+// import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { useRecoilValue } from 'recoil'
 import { movieState } from '../atoms/modalAtom'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
 import Modal from '../components/Modal'
+import Plans from '../components/Plans'
 import Row from '../components/Row'
+// import Spinner from '../components/Spinner'
 import useAuth from '../hooks/useAuth'
 import { Movie } from '../typings'
 import requests from '../utils/requests'
+import payments from './../lib/stripe'
+import useSubcription from './../hooks/useSubcription'
 
 interface Props {
   netflixOriginals: Movie[]
@@ -20,6 +25,7 @@ interface Props {
   horrorMovies: Movie[]
   romanceMovies: Movie[]
   documentaries: Movie[]
+  products: Product[]
 }
 const Home = ({
   netflixOriginals,
@@ -30,20 +36,32 @@ const Home = ({
   romanceMovies,
   topRated,
   trendingNow,
+  products,
 }: Props) => {
   // console.log(netflixOriginals)
 
-  const { loading } = useAuth()
-  const showModal = useRecoilValue(movieState)
+  console.log(products)
 
-  if (loading) {
+  const { loading, user } = useAuth()
+  const showModal = useRecoilValue(movieState)
+  const subscription = useSubcription(user)
+
+  if (loading || subscription === null) {
     return null
   }
+
+  if (!subscription) {
+    return <Plans products={products} />
+  }
+
   return (
     <div className="relative h-screen bg-gradient-to-b lg:h-[140vh]">
       <Head>
-        <title>Home - Netflix </title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Home - Netflix</title>
+        <link
+          rel="icon"
+          href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico"
+        />
       </Head>
 
       {/* Header */}
@@ -72,6 +90,13 @@ const Home = ({
 export default Home
 
 export const getServerSideProps = async () => {
+  const products = await getProducts(payments, {
+    includePrices: true,
+    activeOnly: true,
+  })
+    .then((res) => res)
+    .catch((err) => console.log(err.message))
+
   const [
     netflixOriginals,
     trendingNow,
@@ -102,6 +127,7 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
+      products: products,
     },
   }
 }
