@@ -33,7 +33,7 @@ const Banner = ({ netflixOriginals }: Props) => {
         />
       </div>
 
-      <h1 className="md:tetx-4xl text-2xl font-bold lg:text-7xl">
+      <h1 className="md:tetx-4xl pt-11 text-2xl font-bold md:pt-10 lg:text-7xl">
         {movie?.title || movie?.name || movie?.original_name}
       </h1>
       <p className="max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl">

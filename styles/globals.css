@@ -9,7 +9,7 @@
   }
 
   header {
-    @apply fixed top-0 z-50 flex w-full items-center justify-between px-4 transition-all lg:px-7 lg:py-1;
+    @apply fixed top-0 z-50 flex h-28 w-full items-center justify-between px-4 transition-all lg:px-7 lg:py-1;
   }
 }
 
@@ -50,6 +50,27 @@
 
   .tableDataTitle {
     @apply w-full p-2.5 text-center text-sm font-normal text-white md:w-2/5 md:p-3.5 md:text-left md:text-base;
+  }
+
+  .memberShipLink {
+    @apply cursor-pointer text-blue-500 hover:underline;
+  }
+
+  .menu {
+    @apply md:hidden;
+  }
+
+  .menu .MuiPaper-root {
+    @apply !absolute !left-0 !rounded-none !border !border-[gray] !bg-black !text-white;
+  }
+
+  .menu .MuiList-root {
+    @apply !p-0;
+  }
+
+  .menu .MuiMenuItem-root {
+    @apply !block !w-72 !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200
+    first:cursor-default first:!font-normal first:!text-white hover:!bg-[#11100f];
   }
 }
 

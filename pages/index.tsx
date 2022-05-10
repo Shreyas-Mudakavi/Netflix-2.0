@@ -15,6 +15,7 @@ import { Movie } from '../typings'
 import requests from '../utils/requests'
 import payments from './../lib/stripe'
 import useSubcription from './../hooks/useSubcription'
+import useList from './../hooks/useList'
 
 interface Props {
   netflixOriginals: Movie[]
@@ -38,13 +39,11 @@ const Home = ({
   trendingNow,
   products,
 }: Props) => {
-  // console.log(netflixOriginals)
-
-  console.log(products)
-
   const { loading, user } = useAuth()
   const showModal = useRecoilValue(movieState)
   const subscription = useSubcription(user)
+  const movie = useRecoilValue(movieState)
+  const list = useList(user?.uid)
 
   if (loading || subscription === null) {
     return null
@@ -74,7 +73,10 @@ const Home = ({
           <Row title="Trending Now" movies={trendingNow} />
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action" movies={actionMovies} />
+
           {/* mylist */}
+          {list.length > 0 && <Row title="My List" movies={list} />}
+
           <Row title="Comedy" movies={comedyMovies} />
           <Row title="Horror" movies={horrorMovies} />
           <Row title="Romance" movies={romanceMovies} />

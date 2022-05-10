@@ -7,6 +7,8 @@ import { getProducts, Product } from '@stripe/firestore-stripe-payments'
 import payments from './../lib/stripe'
 import dateFormat from 'dateformat'
 import MembersShip from '../components/MembersShip'
+import { useState } from 'react'
+import Loader from '../components/Loader'
 
 interface Props {
   products: Product[]
@@ -15,11 +17,19 @@ interface Props {
 const account = ({ products }: Props) => {
   const { user, logOut } = useAuth()
   const subscription = useSubcription(user)
-  console.log(products)
-  console.log(subscription, 'subscription')
 
-  const date = subscription?.created
-  // const memberSince = format(new Date(date), 'mediumDate')
+  const [planLoading, setPlanLoading] = useState(true)
+
+  // console.log(products, 'products')
+  // console.log(subscription, 'subscription')
+
+  // const planName = products.filter(
+  //   (product) => product.id === subscription?.product
+  // )[0]?.name
+
+  if (subscription?.status === 'active' && planLoading) {
+    setPlanLoading(false)
+  }
 
   return (
     <div>
@@ -66,17 +76,19 @@ const account = ({ products }: Props) => {
         <MembersShip />
 
         <div
-          className=" mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 
+          className="mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:border-x-0 
         md:border-t md:border-b-0 md:px-0 md:pb-0"
         >
           <h4>Plan Details</h4>
           {/* find the current plan of user */}
-          <div className="">
-            {
+          <div className=" col-span-2 font-medium">
+            {planLoading ? (
+              <Loader color="dark:fill-[#e50914]" />
+            ) : (
               products.filter(
                 (product) => product.id === subscription?.product
               )[0]?.name
-            }
+            )}
           </div>
           <p className="cursor-pointer text-blue-500 hover:underline md:text-right">
             Change Plan

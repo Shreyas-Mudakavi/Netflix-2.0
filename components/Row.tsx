@@ -1,13 +1,13 @@
 import { ChevronLeftIcon } from '@heroicons/react/outline'
 import { ChevronRightIcon } from '@heroicons/react/outline'
+import { DocumentData } from 'firebase/firestore'
 import React, { useRef, useState } from 'react'
 import { Movie } from '../typings'
 import Thumbnail from './Thumbnail'
 
 interface Props {
   title: string
-  // movies: Movie[] | DocumentData[]
-  movies: Movie[]
+  movies: Movie[] | DocumentData[]
 }
 const Row = ({ title, movies }: Props) => {
   const rowRef = useRef<HTMLDivElement>(null)

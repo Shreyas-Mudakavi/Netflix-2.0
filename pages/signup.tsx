@@ -23,15 +23,17 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     // console.log(data)
+    setIsLoading(true)
 
     if (login) {
       await signIn(email, password)
     } else {
-      setIsLoading(true)
       await signUp(email, password)
-
-      setIsLoading(false)
     }
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   // if (isLoading) {
@@ -70,67 +72,63 @@ const Login = () => {
         alt="logo"
       />
 
-      {!isLoading ? (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="relative mt-28 space-y-8 rounded bg-black/75 px-6 py-10 md:mt-0 md:max-w-md md:px-14"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="relative mt-28 space-y-8 rounded bg-black/75 px-6 py-10 md:mt-0 md:max-w-md md:px-14"
+      >
+        <h1 className="text-4xl font-semibold">Sign Up</h1>
+        <div className="space-y-4">
+          <label className="inline-block w-full">
+            <input
+              type="email"
+              placeholder="Email"
+              className={`input ${
+                errors.email && 'border-b-2 border-orange-500'
+              }`}
+              {...register('email', { required: true })}
+            />
+            {errors.email && (
+              <p className="p-1 text-[14px] font-light text-orange-500">
+                Please enter a valid email.
+              </p>
+            )}
+          </label>
+          <label className="inline-block w-full">
+            <input
+              type="password"
+              placeholder="Password"
+              className={`input ${
+                errors.email && 'border-b-2 border-orange-500'
+              }`}
+              {...register('password', { required: true })}
+            />
+            {errors.password && (
+              <p className="p-1 text-[14px] font-light text-orange-500">
+                Your password must contain between 4 and 60 characters.
+              </p>
+            )}
+          </label>
+        </div>
+
+        <button
+          onClick={() => {
+            setLogin(false)
+          }}
+          type="submit"
+          className="w-full rounded bg-[#e50914] py-3 font-semibold"
         >
-          <h1 className="text-4xl font-semibold">Sign Up</h1>
-          <div className="space-y-4">
-            <label className="inline-block w-full">
-              <input
-                type="email"
-                placeholder="Email"
-                className={`input ${
-                  errors.email && 'border-b-2 border-orange-500'
-                }`}
-                {...register('email', { required: true })}
-              />
-              {errors.email && (
-                <p className="p-1 text-[14px] font-light text-orange-500">
-                  Please enter a valid email.
-                </p>
-              )}
-            </label>
-            <label className="inline-block w-full">
-              <input
-                type="password"
-                placeholder="Password"
-                className={`input ${
-                  errors.email && 'border-b-2 border-orange-500'
-                }`}
-                {...register('password', { required: true })}
-              />
-              {errors.password && (
-                <p className="p-1 text-[14px] font-light text-orange-500">
-                  Your password must contain between 4 and 60 characters.
-                </p>
-              )}
-            </label>
-          </div>
+          Sign Up
+        </button>
 
-          <button
-            onClick={() => {
-              setLogin(false)
-            }}
-            type="submit"
-            className="w-full rounded bg-[#e50914] py-3 font-semibold"
-          >
-            Sign Up
-          </button>
-
-          <div className="text-[gray]">
-            Already a user?{' '}
-            <Link href="/login">
-              <span className="cursor-pointer text-white hover:underline">
-                Sign In Now
-              </span>
-            </Link>
-          </div>
-        </form>
-      ) : (
-        <Spinner />
-      )}
+        <div className="text-[gray]">
+          Already a user?{' '}
+          <Link href="/login">
+            <span className="cursor-pointer text-white hover:underline">
+              Sign In Now
+            </span>
+          </Link>
+        </div>
+      </form>
     </div>
   )
 }

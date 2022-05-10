@@ -3,6 +3,7 @@ import Loader from './Loader'
 import useSubcription from './../hooks/useSubcription'
 import { useState } from 'react'
 import { goToBillingPortal } from '../lib/stripe'
+import dateFormat from 'dateformat'
 
 const MembersShip = () => {
   const { user } = useAuth()
@@ -36,6 +37,39 @@ const MembersShip = () => {
             'Cancel Subscription'
           )}
         </button>
+      </div>
+
+      <div className=" col-span-3">
+        <div className="flex flex-col justify-between border-b border-white/10 py-4 md:flex-row">
+          <div>
+            <p className=" font-medium">{user?.email}</p>
+            <p className=" text-[gray]">Password: **********</p>
+          </div>
+          <div className="md:text-right">
+            <p className="memberShipLink">Change email</p>
+            <p className="memberShipLink">Change password</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-between pt-4 pb-4 md:flex-row md:pb-0">
+          <div>
+            <p>
+              {subscription?.cancel_at_period_end
+                ? 'Your membership will end on '
+                : 'Your next billing date is '}
+              {dateFormat(
+                subscription?.current_period_end,
+                'dddd, mmmm dS, yyyy'
+              )}
+            </p>
+          </div>
+          <div className=" md:text-right">
+            <p className="memberShipLink">Manage payment info</p>
+            <p className="memberShipLink">Add backup payment method</p>
+            <p className="memberShipLink">Billing details</p>
+            <p className="memberShipLink">Change billing day</p>
+          </div>
+        </div>
       </div>
     </div>
   )
